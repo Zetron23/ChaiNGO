@@ -1,0 +1,46 @@
+// components/ThemeToggle.tsx
+"use client";
+
+import * as React from "react";
+import { Moon, Sun } from "lucide-react"; // Icons for light/dark mode
+import { useTheme } from "next-themes"; // Hook to access theme state
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+export function ThemeToggle() {
+  // useTheme hook provides setTheme function and current theme info
+  const { setTheme } = useTheme();
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        {/* Button to trigger the theme selection dropdown */}
+        <Button variant="outline" size="icon">
+          {/* Sun icon shown in light mode, rotates on hover/focus */}
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          {/* Moon icon shown in dark mode, rotates on hover/focus */}
+          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Toggle theme</span> {/* Accessibility text */}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {/* Dropdown items to select theme */}
+        <DropdownMenuItem onClick={() => setTheme("light")}>
+          Light
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>
+          Dark
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>
+          System
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
